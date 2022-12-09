@@ -11,21 +11,22 @@ namespace AdventOfCode_2022
                 Console.WriteLine("Enter Day:");
                 string dayInput = Console.ReadLine();
 
+                int day = -1;
+                IDay task = null;
                 try
                 {
-                    var day = int.Parse(dayInput);
-
-                    FindTask(day);
-
+                    task = FindTask(int.Parse(dayInput));
                 } catch (Exception)
                 {
                     Console.WriteLine(dayInput + " is not a number.");
                 }
-            }
 
+                if (task != null)
+                    task.Process();
+            }
         }
 
-        private static void FindTask(int day)
+        private static IDay FindTask(int day)
         {
             IDay dayToProcess = null;
 
@@ -108,12 +109,12 @@ namespace AdventOfCode_2022
                     break;
                 default:
                     Console.WriteLine("\nDay " + day + " is not implemented");
-                    return;
+                    return null;
             }
 
             Console.WriteLine("\n---  Running Day " + day + "  ---");
-            dayToProcess.Process();
-            Console.WriteLine("-----------------------\n");
+            return dayToProcess;
+           // Console.WriteLine("-----------------------\n");
         }
     }
 }
